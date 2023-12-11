@@ -64,11 +64,14 @@ public function complete_appointment($id)
     return $this->db->update('appointment', $data);
 }
 
-public function delete_appointment($id)
+public function cancel_appointment($id)
 {
-    $sql = "delete from appointment where appoid=?";
-    $this->db->query($sql, array($id));
+    $statusCanceled = 'Dibatalkan';
+
+    $sql = "UPDATE appointment SET status = ? WHERE appoid = ?";
+    $this->db->query($sql, array($statusCanceled, $id));
 }
+
 
 public function history_appointment($id)
 {
@@ -108,8 +111,5 @@ public function updateStatus($useremail) {
 
     return $result;
 }
-
-
-
 
 }

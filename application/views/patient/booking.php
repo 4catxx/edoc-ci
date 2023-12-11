@@ -173,102 +173,91 @@ $today = date('Y-m-d');
                             
                         <tbody>
     <?php
-    if($this->input->get('id')){
+    if ($this->input->get('id')) {
         $id = $this->input->get('id');
         $this->load->database();
-        $sqlmain= "select * from schedule inner join doctor on schedule.docid=doctor.docid where schedule.scheduleid=? order by schedule.scheduledate desc";
+    
+        $sqlmain = "SELECT s.*, d.* FROM schedule s 
+            INNER JOIN doctor d ON s.docid = d.docid 
+            WHERE s.scheduleid = ? 
+            ORDER BY s.scheduledate DESC";
+    
         $query = $this->db->query($sqlmain, array($id));
         $row = $query->row();
-        if (isset($row))
-        {
-            $scheduleid=$row->scheduleid;
-            $title=$row->title;
-            $docname=$row->docname;
-            $docemail=$row->docemail;
-            $scheduledate=$row->scheduledate;
-            $scheduletime=$row->scheduletime;
-            $sql2="select * from appointment where scheduleid=$id";
-            $result12= $this->db->query($sql2);
-            $apponum=($result12->num_rows())+1;
-
+    
+        if ($row) {
+            $scheduleid = $row->scheduleid;
+            $title = $row->title;
+            $docname = $row->docname;
+            $docemail = $row->docemail;
+            $scheduledate = $row->scheduledate;
+            $scheduletime = $row->scheduletime;
+    
+            // Menambahkan kueri untuk mengambil harga dari specialties
+            $sqlSpecialty = "SELECT harga FROM doctor WHERE docname = ?";
+            $stmt = $this->db->conn_id->prepare($sqlSpecialty);
+            $stmt->bind_param("s", $docname);
+            $stmt->execute();
+            $resultSpecialty = $stmt->get_result();
+            $specialtyData = $resultSpecialty->fetch_assoc();
+            $channelingFee = $specialtyData["harga"];
+    
+            $sql2 = "SELECT * FROM appointment WHERE scheduleid = ?";
+            $result12 = $this->db->query($sql2, array($id));
+            $apponum = $result12->num_rows() + 1;
+    
             echo '
-                <form action="'.base_url('patient').'/bookingComplete" method="post">
-                    <input type="hidden" name="scheduleid" value="'.$scheduleid.'" >
-                    <input type="hidden" name="apponum" value="'.$apponum.'" >
-                    <input type="hidden" name="date" value="'.$today.'" >
+                <form action="' . base_url('patient') . '/bookingComplete" method="post">
+                    <input type="hidden" name="scheduleid" value="' . $scheduleid . '" >
+                    <input type="hidden" name="apponum" value="' . $apponum . '" >
+                    <input type="hidden" name="date" value="' . $today . '" >
                 ';
-                                     
-
-                                    echo '
-                                    <td style="width: 50%;" rowspan="2">
-                                            <div  class="dashboard-items search-items"  >
-                                            
-                                                <div style="width:100%">
-                                                        <div class="h1-search" style="font-size:25px;">
-                                                            Session Details
-                                                        </div><br><br>
-                                                        <div class="h3-search" style="font-size:18px;line-height:30px">
-                                                            Doctor name:  &nbsp;&nbsp;<b>'.$docname.'</b><br>
-                                                            Doctor Email:  &nbsp;&nbsp;<b>'.$docemail.'</b> 
-                                                        </div>
-                                                        <div class="h3-search" style="font-size:18px;">
-                                                          
-                                                        </div><br>
-                                                        <div class="h3-search" style="font-size:18px;">
-                                                            Session Title: '.$title.'<br>
-                                                            Session Scheduled Date: '.$scheduledate.'<br>
-                                                            Session Starts : '.$scheduletime.'<br>
-                                                            Channeling fee : <b>LKR.2 000.00</b>
-
-                                                        </div>
-                                                        <br>
-                                                        
-                                                </div>
-                                                        
-                                            </div>
-                                        </td>
-                                        
-                                        
-                                        
-                                        <td style="width: 25%;">
-                                            <div  class="dashboard-items search-items"  >
-                                            
-                                                <div style="width:100%;padding-top: 15px;padding-bottom: 15px;">
-                                                        <div class="h1-search" style="font-size:20px;line-height: 35px;margin-left:8px;text-align:center;">
-                                                            Your Appointment Number
-                                                        </div>
-                                                        <center>
-                                                        <div class=" dashboard-icons" style="margin-left: 0px;width:90%;font-size:70px;font-weight:800;text-align:center;color:var(--btnnictext);background-color: var(--btnice)">'.$apponum.'</div>
-                                                    </center>
-                                                       
-                                                        </div><br>
-                                                        
-                                                        <br>
-                                                        <br>
-                                                </div>
-                                                        
-                                            </div>
-                                        </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <input type="Submit" class="login-btn btn-primary btn btn-book" style="margin-left:10px;padding-left: 25px;padding-right: 25px;padding-top: 10px;padding-bottom: 10px;width:95%;text-align: center;" value="Book now" name="booknow"></button>
-                                            </form>
-                                            </td>
-                                        </tr>
-                                        '; 
-                                        
-
-
-
-
-                                }
-
-
-
-                            }
-                            
-                            ?>
+            echo '
+                <td style="width: 50%;" rowspan="2">
+                    <div  class="dashboard-items search-items"  >
+                        <div style="width:100%">
+                            <div class="h1-search" style="font-size:25px;">
+                                Session Details
+                            </div><br><br>
+                            <div class="h3-search" style="font-size:18px;line-height:30px">
+                                Nama Dokter:  &nbsp;&nbsp;<b>' . $docname . '</b><br>
+                                Email Dokter:  &nbsp;&nbsp;<b>' . $docemail . '</b> 
+                            </div>
+                            <div class="h3-search" style="font-size:18px;">
+                                Tittle: ' . $title . '<br>
+                                Tanggal Konsultasi: ' . $scheduledate . '<br>
+                                Mulai Konsultasi : ' . $scheduletime . '<br>
+                                Biaya Dokter : <b>RP.' . number_format($channelingFee, 2) . '</b>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </td>
+        <td style="width: 25%;">
+            <div  class="dashboard-items search-items"  >
+                <div style="width:100%;padding-top: 15px;padding-bottom: 15px;">
+                    <div class="h1-search" style="font-size:20px;line-height: 35px;margin-left:8px;text-align:center;">
+                        Nomor Antrian
+                    </div>
+                    <center>
+                        <div class=" dashboard-icons" style="margin-left: 0px;width:90%;font-size:70px;font-weight:800;text-align:center;color:var(--btnnictext);background-color: var(--btnice)">' . $apponum . '</div>
+                    </center>
+                </div><br><br>
+                <br>
+                <br>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="Submit" class="login-btn btn-primary btn btn-book" style="margin-left:10px;padding-left: 25px;padding-right: 25px;padding-top: 10px;padding-bottom: 10px;width:95%;text-align: center;" value="Book now" name="booknow"></button>
+        </form>
+        </td>
+    </tr>
+    ';
+}
+    }
+?>
  
                             </tbody>
 

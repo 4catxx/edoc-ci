@@ -183,12 +183,10 @@
                         <table width="93%" class="sub-table scrolldown" border="0">
                         <thead>
                         <tr>
-    <th class="table-headin">
-        Tanggal Pemesanan
-    </th>
-    <th class="table-headin">
+    
+    <!--<th class="table-headin">
         Reference Number
-    </th>
+    </th> -->
     <th class="table-headin">
         Tittle
     </th>
@@ -196,13 +194,16 @@
         Nama Dokter
     </th>
     <th class="table-headin">
-        status
+        Tanggal Pemesanan
     </th>
     <th class="table-headin">
-        Tanggal Konsultasi
+        Waktu Konsultasi
     </th>
     <th class="table-headin">
         Jam
+    </th>
+    <th class="table-headin">
+        Status
     </th>
     <th class="table-headin">
         Action
@@ -211,57 +212,88 @@
                                     
                                 </thead>
                                 <?php
-    $allStatusNull = true;
+$printerImageWhite = base_url('assets') . '/img/icons/printer-putih.png';
+$printerImageBlue = base_url('assets') . '/img/icons/printer-biru.png';
+?>
 
-    while ($row = $result->unbuffered_row('array')) {
-        $scheduleid = $row["scheduleid"];
-        $title = $row["title"];
-        $docname = $row["docname"];
-        $scheduledate = $row["scheduledate"];
-        $scheduletime = $row["scheduletime"];
-        $apponum = $row["apponum"];
-        $appodate = $row["appodate"];
-        $appoid = $row["appoid"];
-        $status = $row["status"];
+<?php
+$allStatusNull = true;
 
-        if ($scheduleid == "") {
-            break;
-        }
+while ($row = $result->unbuffered_row('array')) {
+    $scheduleid = $row["scheduleid"];
+    $title = $row["title"];
+    $docname = $row["docname"];
+    $scheduledate = $row["scheduledate"];
+    $scheduletime = $row["scheduletime"];
+    $apponum = $row["apponum"];
+    $appodate = $row["appodate"];
+    $appoid = $row["appoid"];
+    $status = $row["status"];
 
-        // Tambahkan kondisi di sini
-        if ($status !== null && $status !== '') {
-            $allStatusNull = false;
-            echo '<tr>';
-            echo '<td style="text-align: center;">' . substr($appodate, 0, 30) . '</td>';
-            echo '<td style="text-align: center;">OC-000-' . $appoid . '</td>';
-            echo '<td style="text-align: center;">' . substr($title, 0, 21) . '</td>';
-            echo '<td style="text-align: center;">' . substr($docname, 0, 30) . '</td>';
-            echo '<td style="text-align: center;">' . $status . '</td>';
-            echo '<td style="text-align: center;">' . $scheduledate . '</td>';
-            echo '<td style="text-align: center;">' . substr($scheduletime, 0, 5) . '</td>';
-            echo '<td style="text-align: center;"><a href="' . base_url('patient') . '/appointment?action=drop&id=' . $appoid . '&title=' . $title . '&doc=' . $docname . '"><button class="login-btn btn-primary-soft btn" style="padding-top:11px;padding-bottom:11px;width:100%"><font class="tn-in-text">Cancel Booking</font></button></a></td>';
-            echo '</tr>';
-        }
+    if ($scheduleid == "") {
+        break;
     }
 
-    if ($allStatusNull || $result->num_rows() == 0) {
-        echo '<tr>
-            <td colspan="8">
-                <br><br><br><br>
-                <center>
-                    <img src="' . base_url('assets') . '/img/notfound.svg" width="25%">
+    // Tambahkan kondisi di sini
+    if ($status !== null && $status !== '') {
+        $allStatusNull = false;
+        echo '<tr>';
 
-                    <br>
-                    <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">We couldnt find anything related to your keywords !</p>
+        echo '<td style="text-align: center;">' . substr($title, 0, 21) . '</td>';
+        echo '<td style="text-align: center;">' . substr($docname, 0, 30) . '</td>';
+        echo '<td style="text-align: center;">' . substr($appodate, 0, 30) . '</td>';
+        echo '<td style="text-align: center;">' . $scheduledate . '</td>';
+        echo '<td style="text-align: center;">' . substr($scheduletime, 0, 5) . '</td>';
+        echo '<td style="text-align: center;">' . $status . '</td>';
+        echo '<td style="text-align: center;">';
 
-                    <a class="non-style-link" href="' . base_url('patient') . '/appointment.php"><button  class="login-btn btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin-left:20px;">  Show all Appointments  </font></button>
-                    </a>
-                </center>
-                <br><br><br><br>
-            </td>
-        </tr>';
+        // Tambahkan kondisi untuk menampilkan tombol "Invoice"
+        if ($status === 'Selesai') {
+            echo '<a href="' . base_url('patient/print_invoice?id=' . $appoid . '&title=' . $title . '&doc=' . $docname) . '" class="non-style-link">
+                <button class="btn-primary-soft btn button-icon" style="padding: 5px; margin-top: 10px;" onmouseover="changeImage(this)" onmouseout="restoreImage(this)">
+                    <img src="' . $printerImageBlue . '" alt="Print" width="30" style="padding: 1px; vertical-align: middle;" id="printerImage">
+                    <font class="tn-in-text" style="margin-left: 5px;">Invoice</font>
+                </button>
+            </a>';
+        }
+
+        echo '</td>';
+        echo '</tr>';
     }
-    ?>
+}
+
+// Tempatkan JavaScript di luar dari loop
+?>
+<script>
+    function changeImage(button) {
+        document.getElementById("printerImage").src = "<?php echo $printerImageWhite; ?>";
+    }
+
+    function restoreImage(button) {
+        document.getElementById("printerImage").src = "<?php echo $printerImageBlue; ?>";
+    }
+</script>
+
+<?php
+if ($allStatusNull || $result->num_rows() == 0) {
+    echo '<tr>
+        <td colspan="8">
+            <br><br><br><br>
+            <center>
+                <img src="' . base_url('assets') . '/img/notfound.svg" width="25%">
+
+                <br>
+                <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">We couldnt find anything related to your keywords !</p>
+
+                <a class="non-style-link" href="' . base_url('patient') . '/appointment.php"><button  class="login-btn btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin-left:20px;">  Show all Appointments  </font></button>
+                </a>
+            </center>
+            <br><br><br><br>
+        </td>
+    </tr>';
+}
+?>
+
                                 </tbody>
                             </table>
                         </div>

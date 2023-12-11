@@ -7,6 +7,7 @@ class Dashboard_controller extends CI_Controller {
     parent::__construct();
     $this->load->database();
     $this->load->helper('url');
+    $this->load->model('User_model');
 }
 
     public function index() {
@@ -65,22 +66,23 @@ class Dashboard_controller extends CI_Controller {
         $this->load->view('patient/history', $data);
     }
 
-    public function deleteAppointment() {
+    public function cancelAppointment() {
         if(isset($_SESSION["user"])){
             if(($_SESSION["user"])=="" or $_SESSION['usertype']!='p'){
                 redirect('auth/login');
             }
-        }else{
+        } else {
             redirect('auth/login');
         }
     
         if($this->input->get('id')){
             $id = $this->input->get('id');
             $this->load->model('user_model');
-            $this->appointment_model->delete_appointment($id);
+            $this->user_model->cancel_appointment($id);  // Memanggil fungsi dari user_model
             redirect("dashboard_controller/appointment");
         }
     }
+    
     public function delete_user() {
         if($this->session->has_userdata('user')){
             if(($this->session->userdata('user'))=="" or $this->session->userdata('usertype')!='p'){
@@ -122,7 +124,7 @@ class Dashboard_controller extends CI_Controller {
         $result = $this->User_model->update_user($id, $name, $nic, $oldemail, $address, $email, $tele, $password, cpassword);
 
         // Redirect the user to the appropriate page
-        redirect("patient/settings?action=edit&error=" . result['error'] . "&id=" . result['id']);
+        redirect("patient/settings?action=edit&error=" . urlencode($result['error']) . "&id=" . urlencode($result['id']));
     }
 
     public function status_appointment()
@@ -143,5 +145,6 @@ $data['appointments'] = $this->User_model->history_appointment($userid);
 // Load view dan kirim data history ke view
 $this->load->view('patient/history', $data);
 }
+
 
 }
