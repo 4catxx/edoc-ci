@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="<?= base_url('assets'); ?>/animations.css">
     <link rel="stylesheet" href="<?= base_url('assets'); ?>/main.css">
     <link rel="stylesheet" href="<?= base_url('assets'); ?>/admin.css">
-        
-    <title>Sessions</title>
     <style>
         .popup{
             animation: transitionIn-Y-bottom 0.5s;
@@ -16,40 +14,40 @@
         .sub-table{
             animation: transitionIn-Y-bottom 0.5s;
         }
-</style>
+    </style>
+    <title>Sessions</title>
 </head>
 <body>
     <?php
- if($this->session->has_userdata('user')){
-     if(($this->session->userdata('user'))=="" or $this->session->userdata('usertype')!='p'){
-         redirect('auth/login');
-     }else{
-         $useremail=$this->session->userdata('user');
-     }
- }else{
-     redirect('auth/login');
- }
-    
+    if ($this->session->has_userdata('user')) {
+        if (($this->session->userdata('user')) == "" or $this->session->userdata('usertype') != 'p') {
+            redirect('auth/login');
+        } else {
+            $useremail = $this->session->userdata('user');
+        }
+    } else {
+        redirect('auth/login');
+    }
 
     //import database
 
-    $sqlmain= "select * from patient where pemail=?";
-$stmt = $this->db->conn_id->prepare($sqlmain);
-$stmt->bind_param("s",$useremail);
-$stmt->execute();
-$result = $stmt->get_result();
-$userfetch=$result->fetch_assoc();
-$userid= $userfetch["pid"];
-$username=$userfetch["pname"];
+    $sqlmain = "select * from patient where pemail=?";
+    $stmt = $this->db->conn_id->prepare($sqlmain);
+    $stmt->bind_param("s", $useremail);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $userfetch = $result->fetch_assoc();
+    $userid = $userfetch["pid"];
+    $username = $userfetch["pname"];
 
-date_default_timezone_set('Asia/Jakarta');
+    date_default_timezone_set('Asia/Jakarta');
 
-$today = date('Y-m-d');
+    $today = date('Y-m-d');
 
-?>
- <div class="container">
-     <div class="menu">
-     <table class="menu-container" border="0">
+    ?>
+    <div class="container">
+        <div class="menu">
+            <table class="menu-container" border="0">
              <tr>
                  <td style="padding:10px" colspan="2">
                      <table border="0" class="profile-container">
@@ -97,9 +95,9 @@ $today = date('Y-m-d');
                     </td>
                 </tr>
                 
-            </table>
+                </table>
         </div>
-        
+
         <div class="dash-body">
             <table border="0" width="100%" style=" border-spacing: 0;margin:0;padding:0;margin-top:25px; ">
                 <tr >

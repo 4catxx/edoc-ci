@@ -156,7 +156,6 @@
                         
                     <center>
                     <table class="filter-container doctor-header patient-header" style="border: none; width: 95%; background-image: url('<?= base_url('assets/img/b3.jpg') ?>')" border="0">
->
                     <tr>
                         <td >
                         <h3>Selamat datang!</h3>

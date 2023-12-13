@@ -111,5 +111,44 @@ public function updateStatus($useremail) {
 
     return $result;
 }
+public function get_schedule_data($pid, $scheduledate)
+{
+    $this->db->select('doctor.docname, schedule.title, schedule.scheduledate, schedule.scheduletime, schedule.nop, schedule.status');
+    $this->db->from('schedule');
+    $this->db->join('doctor', 'schedule.docid = doctor.docid');
+    $this->db->where('schedule.docid', $pid);
+    
+    if (!empty($scheduledate)) {
+        $this->db->where('schedule.scheduledate', $scheduledate);
+    }
+    
+    $query = $this->db->get();
+    return $query->result_array();
+}
+
+public function get_data()
+    {
+        $query = "
+        SELECT 
+            schedule.title, 
+            patient.*, 
+            appointment.appodate, 
+            doctor.* 
+        FROM 
+            appointment
+        JOIN 
+            schedule ON appointment.scheduleid = schedule.scheduleid
+        JOIN 
+            patient ON appointment.pid = patient.pid
+        JOIN 
+            doctor ON schedule.docid = doctor.docid
+        ";
+
+        $result = $this->db->query($query);
+
+        return $result->result_array();
+    }
+}
+?>
 
 }

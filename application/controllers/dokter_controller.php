@@ -160,4 +160,20 @@ public function deleteAppointment() {
     }
 }
 
+public function finishAppointment() {
+    $appoid = $this->input->post('appoid');
+    if (isset($_FILES['pdfFile']) && $_FILES['pdfFile']['error'] === UPLOAD_ERR_OK) {
+        // File berhasil diupload, ubah file menjadi string base64
+        $pdfData = base64_encode(file_get_contents($_FILES['pdfFile']['tmp_name']));
+        // Simpan string base64 ke kolom 'rekam'
+        $this->db->set('rekam', $pdfData);
+        $this->db->set('status', 'Selesai');
+        $this->db->where('appoid', $appoid);
+        $this->db->update('appointment');
+    }
+    redirect('dokter/appointment');
+}
+
+
+
 }

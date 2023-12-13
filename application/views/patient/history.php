@@ -249,10 +249,10 @@ while ($row = $result->unbuffered_row('array')) {
 
         // Tambahkan kondisi untuk menampilkan tombol "Invoice"
         if ($status === 'Selesai') {
-            echo '<a href="' . base_url('patient/print_invoice?id=' . $appoid . '&title=' . $title . '&doc=' . $docname) . '" class="non-style-link">
+            echo '<a href="' . base_url('patient/download_record?id=' . $appoid) . '" class="non-style-link">
                 <button class="btn-primary-soft btn button-icon" style="padding: 5px; margin-top: 10px;" onmouseover="changeImage(this)" onmouseout="restoreImage(this)">
                     <img src="' . $printerImageBlue . '" alt="Print" width="30" style="padding: 1px; vertical-align: middle;" id="printerImage">
-                    <font class="tn-in-text" style="margin-left: 5px;">Invoice</font>
+                    <font class="tn-in-text" style="margin-left: 5px;">Unduh Rekam</font>
                 </button>
             </a>';
         }

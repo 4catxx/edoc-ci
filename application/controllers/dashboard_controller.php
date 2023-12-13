@@ -146,5 +146,16 @@ $data['appointments'] = $this->User_model->history_appointment($userid);
 $this->load->view('patient/history', $data);
 }
 
+public function download_record() {
+    $appoid = $this->input->get('id');
+    $this->db->select('rekam');
+    $this->db->where('appoid', $appoid);
+    $query = $this->db->get('appointment');
+    $record = $query->row()->rekam;
+    $fileData = base64_decode($record);
+    header('Content-Type: application/pdf');
+    header('Content-Disposition: attachment; filename="Rekam Medik.pdf"');
+    echo $fileData;
+}
 
 }
