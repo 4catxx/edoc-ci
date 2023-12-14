@@ -69,31 +69,51 @@
                  </td>
              </tr>
              <tr class="menu-row" >
-                    <td class="menu-btn menu-icon-home " style="background-image: url('<?= base_url('assets/img/icons/home.svg') ?>')">
-                        <a href="<?= base_url('patient'); ?>/index" class="non-style-link-menu "><div><p class="menu-text">Home</p></a></div></a>
-                    </td>
-                </tr>
-                <tr class="menu-row">
-                    <td class="menu-btn menu-icon-doctor"style="background-image: url('<?= base_url('assets/img/icons/doctors.svg') ?>')"> 
-                        <a href="<?= base_url('patient'); ?>/doctors" class="non-style-link-menu"><div><p class="menu-text">All Doctors</p></a></div>
-                    </td>
-                </tr>
-                
-                <tr class="menu-row" >
-                    <td class="menu-btn menu-icon-session menu-active menu-icon-session-active" style="background-image: url('<?= base_url('assets/img/icons/session.svg') ?>')">
-                        <a href="<?= base_url('patient'); ?>/schedule" class="non-style-link-menu non-style-link-menu-active"><div><p class="menu-text">Scheduled Sessions</p></div></a>
-                    </td>
-                </tr>
-                <tr class="menu-row" >
-                    <td class="menu-btn menu-icon-appoinment" style="background-image: url('<?= base_url('assets/img/icons/book.svg') ?>')">
-                        <a href="<?= base_url('patient'); ?>/appointment" class="non-style-link-menu"><div><p class="menu-text">My Bookings</p></a></div>
-                    </td>
-                </tr>
-                <tr class="menu-row" >
-                    <td class="menu-btn menu-icon-settings" style="background-image: url('<?= base_url('assets/img/icons/settings.svg') ?>')">
-                        <a href="<?= base_url('patient'); ?>/settings" class="non-style-link-menu"><div><p class="menu-text">Settings</p></a></div>
-                    </td>
-                </tr>
+             <td class="menu-btn menu-icon-home" style="background-image: url('<?= base_url('assets/img/icons/home.svg') ?>')">
+        <a href="<?= base_url('patient'); ?>/index" class="non-style-link-menu">
+            <div>
+                <p class="menu-text">Beranda</p>
+            </div>
+        </a>
+    </td>
+</tr>
+<tr class="menu-row">
+    <td class="menu-btn menu-icon-doctor" style="background-image: url('<?= base_url('assets/img/icons/doctors.svg') ?>')">
+        <a href="<?= base_url('patient'); ?>/doctors" class="non-style-link-menu">
+            <div>
+                <p class="menu-text">Semua Dokter</p>
+            </div>
+        </a>
+    </td>
+</tr>
+
+<tr class="menu-row">
+    <td class="menu-btn menu-icon-session menu-active menu-icon-session-active" style="background-image: url('<?= base_url('assets/img/icons/session.svg') ?>')">
+        <a href="<?= base_url('patient'); ?>/schedule" class="non-style-link-menu non-style-link-menu-active">
+            <div>
+                <p class="menu-text">Sesi Terjadwal</p>
+            </div>
+        </a>
+    </td>
+</tr>
+<tr class="menu-row">
+    <td class="menu-btn menu-icon-appoinment" style="background-image: url('<?= base_url('assets/img/icons/book.svg') ?>')">
+        <a href="<?= base_url('patient'); ?>/appointment" class="non-style-link-menu">
+            <div>
+                <p class="menu-text">Pemesanan Saya</p>
+            </div>
+        </a>
+    </td>
+</tr>
+<tr class="menu-row">
+    <td class="menu-btn menu-icon-settings" style="background-image: url('<?= base_url('assets/img/icons/settings.svg') ?>')">
+        <a href="<?= base_url('patient'); ?>/settings" class="non-style-link-menu">
+            <div>
+                <p class="menu-text">Pengaturan</p>
+            </div>
+        </a>
+    </td>
+</tr>
                 
                 </table>
         </div>
