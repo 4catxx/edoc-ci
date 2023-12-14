@@ -89,7 +89,7 @@
             <table border="0" width="100%" style=" border-spacing: 0;margin:0;padding:0;margin-top:25px; ">
                 <tr >
                     <td width="13%" >
-                    <a href="appointment.php" ><button  class="login-btn btn-primary-soft btn btn-icon-back"  style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px"><font class="tn-in-text">Back</font></button></a>
+                    <a href="<?= base_url('admin'); ?>/appointment" ><button  class="login-btn btn-primary-soft btn btn-icon-back"  style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px"><font class="tn-in-text">Back</font></button></a>
                     </td>
                     <td>
                         <p style="font-size: 23px;padding-left:12px;font-weight: 600;">Appointment Manager</p>
@@ -101,7 +101,7 @@
     </p>
     <p class="heading-sub12" style="padding: 0;margin: 0;">
         <?php
-            date_default_timezone_set('Asia/Kolkata');
+            date_default_timezone_set('Asia/Jakarta');
             $today = date('Y-m-d');
             echo $today;
             $list110 = $this->db->get('appointment');
@@ -416,7 +416,7 @@
                         <a class="close" href="schedule.php">&times;</a>
                         <div class="content">' . substr($titleget, 0, 40) . ' was scheduled.<br><br></div>
                         <div style="display: flex;justify-content: center;">
-                            <a href="schedule.php" class="non-style-link"><button class="btn-primary btn" style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;OK&nbsp;&nbsp;</font></button></a>
+                            <a href=""'.base_url('dokter').'/schedule" class="non-style-link"><button class="btn-primary btn" style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;OK&nbsp;&nbsp;</font></button></a>
                             <br><br><br><br>
                         </div>
                     </center>
@@ -431,11 +431,11 @@
                 <div class="popup">
                     <center>
                         <h2>Are you sure?</h2>
-                        <a class="close" href="appointment.php">&times;</a>
+                        <a class="close" href="'.base_url('admin').'/Appointment">&times;</a>
                         <div class="content">You want to delete this record<br><br>Patient Name: &nbsp;<b>' . substr($nameget, 0, 40) . '</b><br>Appointment number &nbsp; : <b>' . substr($apponum, 0, 40) . '</b><br><br></div>
                         <div style="display: flex;justify-content: center;">
-                            <a href="delete-appointment.php?id=' . $id . '" class="non-style-link"><button class="btn-primary btn" style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;Yes&nbsp;</font></button></a>&nbsp;&nbsp;&nbsp;
-                            <a href="appointment.php" class="non-style-link"><button class="btn-primary btn" style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;No&nbsp;&nbsp;</font></button></a>
+                            <a href="'.base_url('admin').'/deleteAppointment?id=' . $id . '" class="non-style-link"><button class="btn-primary btn" style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;Yes&nbsp;</font></button></a>&nbsp;&nbsp;&nbsp;
+                            <a href="'.base_url('admin').'/Appointment" class="non-style-link"><button class="btn-primary btn" style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;No&nbsp;&nbsp;</font></button></a>
                         </div>
                     </center>
                 </div>

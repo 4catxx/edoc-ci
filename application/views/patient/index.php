@@ -326,6 +326,7 @@
                                             $nextweek=date("Y-m-d",strtotime("+1 week"));
                                             $sqlmain= "select * from schedule inner join appointment on schedule.scheduleid=appointment.scheduleid inner join patient on patient.pid=appointment.pid inner join doctor on schedule.docid=doctor.docid where patient.pid=$userid and schedule.scheduledate>='$today' order by schedule.scheduledate asc";
                                             $result= $this->db->query($sqlmain);
+                                            $allStatusNull = true;
                 
                                             if($result->num_rows()==0){
                                                 echo '<tr>
@@ -348,6 +349,9 @@
                                                 }
                                                 else{
                                                    foreach ($result->result_array() as $row){
+                                                    $status = $row["status"];
+                                                    if ($status !== null && $status !== '') {
+                                                        $allStatusNull = false;
                                                         $scheduleid=$row["scheduleid"];
                                                         $title=$row["title"];
                                                         $apponum=$row["apponum"];
@@ -377,6 +381,24 @@
                                                     
                                                 }
                                             }
+                                            if ($allStatusNull) {
+                                                echo '<tr>
+                                                <td colspan="4">
+                                                <br><br><br><br>
+                                                <center>
+                                                <img src="'.base_url('assets').'/img/notfound.svg" width="25%">
+                                                
+                                                <br>
+                                                <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">Nothing to show here!</p>
+                                                <a class="non-style-link" href="'.base_url('patient').'/schedule"><button class="login-btn btn-primary-soft btn" style="display: flex;justify-content: center;align-items: center;margin-left:20px;">  Channel a Doctor  </font></button>
+                                                </a>
+                                                </center>
+                                                <br><br><br><br>
+                                                </td>
+                                                </tr>';
+                                            }
+                                        }
+                                      
                                                  
                                             ?>
                  
