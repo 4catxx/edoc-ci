@@ -67,20 +67,11 @@ class Dashboard_controller extends CI_Controller {
     }
 
     public function cancelAppointment() {
-        if(isset($_SESSION["user"])){
-            if(($_SESSION["user"])=="" or $_SESSION['usertype']!='p'){
-                redirect('auth/login');
-            }
-        } else {
-            redirect('auth/login');
-        }
-    
-        if($this->input->get('id')){
-            $id = $this->input->get('id');
-            $this->load->model('user_model');
-            $this->user_model->cancel_appointment($id);  // Memanggil fungsi dari user_model
-            redirect("dashboard_controller/appointment");
-        }
+        $appoid = $this->input->get('id');
+        $this->db->set('status', 'Batal');
+        $this->db->where('appoid', $appoid);
+        $this->db->update('appointment');
+        redirect('patient/appointment');
     }
     
     public function delete_user() {
@@ -157,5 +148,7 @@ public function download_record() {
     header('Content-Disposition: attachment; filename="Rekam Medik.pdf"');
     echo $fileData;
 }
+
+
 
 }

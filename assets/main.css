@@ -54,6 +54,11 @@ body{
     transition: 0.2s;
     outline: none;
 }
+button:disabled {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+}
 .btn-history {
   padding: 11px;
   width: 125px;

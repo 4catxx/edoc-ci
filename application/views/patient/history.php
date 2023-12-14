@@ -234,7 +234,6 @@ while ($row = $result->unbuffered_row('array')) {
         break;
     }
 
-    // Tambahkan kondisi di sini
     if ($status !== null && $status !== '') {
         $allStatusNull = false;
         echo '<tr>';
@@ -247,7 +246,6 @@ while ($row = $result->unbuffered_row('array')) {
         echo '<td style="text-align: center;">' . $status . '</td>';
         echo '<td style="text-align: center;">';
 
-        // Tambahkan kondisi untuk menampilkan tombol "Invoice"
         if ($status === 'Selesai') {
             echo '<a href="' . base_url('patient/download_record?id=' . $appoid) . '" class="non-style-link">
                 <button class="btn-primary-soft btn button-icon" style="padding: 5px; margin-top: 10px;" onmouseover="changeImage(this)" onmouseout="restoreImage(this)">
@@ -255,24 +253,32 @@ while ($row = $result->unbuffered_row('array')) {
                     <font class="tn-in-text" style="margin-left: 5px;">Unduh Rekam</font>
                 </button>
             </a>';
+        } else {
+            echo '<button class="btn-primary-soft btn button-icon" style="padding: 5px; margin-top: 10px;" disabled id="disabledButton">
+                <img src="' . $printerImageBlue . '" alt="Print" width="30" style="padding: 1px; vertical-align: middle;" id="printerImage">
+                <font class="tn-in-text" style="margin-left: 5px;">Unduh Rekam</font>
+            </button>';
         }
-
+        
         echo '</td>';
         echo '</tr>';
+        }
     }
+        ?>
+<script>
+   document.getElementById('disabledButton').addEventListener('mousedown', function() {
+    alert('Tidak dapat mendownload hasil rekam medis');
+});
+
+function changeImage(button) {
+    document.getElementById("printerImage").src = "<?php echo $printerImageWhite; ?>";
 }
 
-// Tempatkan JavaScript di luar dari loop
-?>
-<script>
-    function changeImage(button) {
-        document.getElementById("printerImage").src = "<?php echo $printerImageWhite; ?>";
-    }
-
-    function restoreImage(button) {
-        document.getElementById("printerImage").src = "<?php echo $printerImageBlue; ?>";
-    }
+function restoreImage(button) {
+    document.getElementById("printerImage").src = "<?php echo $printerImageBlue; ?>";
+}
 </script>
+
 
 <?php
 if ($allStatusNull || $result->num_rows() == 0) {
