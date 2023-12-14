@@ -62,7 +62,7 @@
                          </tr>
                          <tr>
                              <td colspan="2">
-                                 <a href="<?= base_url('auth'); ?>/logout.php" ><input type="button" value="Log out" class="logout-btn btn-primary-soft btn"></a>
+                                 <a href="<?= base_url('auth'); ?>/logout" ><input type="button" value="Log out" class="logout-btn btn-primary-soft btn"></a>
                              </td>
                          </tr>
                  </table>
@@ -91,7 +91,7 @@
                 </tr>
                 <tr class="menu-row" >
                     <td class="menu-btn menu-icon-settings" style="background-image: url('<?= base_url('assets/img/icons/settings.svg') ?>')">
-                        <a href="<?= base_url('patient'); ?>/settings.php" class="non-style-link-menu"><div><p class="menu-text">Settings</p></a></div>
+                        <a href="<?= base_url('patient'); ?>/settings" class="non-style-link-menu"><div><p class="menu-text">Settings</p></a></div>
                     </td>
                 </tr>
                 
@@ -102,10 +102,10 @@
             <table border="0" width="100%" style=" border-spacing: 0;margin:0;padding:0;margin-top:25px; ">
                 <tr >
                     <td width="13%" >
-                    <a href="schedule.php" ><button  class="login-btn btn-primary-soft btn btn-icon-back"  style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px"><font class="tn-in-text">Back</font></button></a>
+                    <a href="<?= base_url('patient'); ?>schedule" ><button  class="login-btn btn-primary-soft btn btn-icon-back"  style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px"><font class="tn-in-text">Back</font></button></a>
                     </td>
                     <td >
-                    <form action="schedule.php" method="post" class="header-search">
+                    <form action="<?= base_url('patient'); ?>schedule" method="post" class="header-search">
     <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Doctor name or Email or Date (YYYY-MM-DD)" list="doctors" >  
     <?php
         $this->load->database();
@@ -190,6 +190,7 @@
             $docemail = $row->docemail;
             $scheduledate = $row->scheduledate;
             $scheduletime = $row->scheduletime;
+            $nop = $row->nop;
     
             // Menambahkan kueri untuk mengambil harga dari specialties
             $sqlSpecialty = "SELECT harga FROM doctor WHERE docname = ?";
@@ -210,6 +211,12 @@
                     <input type="hidden" name="apponum" value="' . $apponum . '" >
                     <input type="hidden" name="date" value="' . $today . '" >
                 ';
+                if ($apponum > $nop) {
+                    echo '<div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+                    <p>Maaf, tidak ada slot appointment yang tersedia.</p>
+                </div>
+                ';
+                } else {
             echo '
                 <td style="width: 50%;" rowspan="2">
                     <div  class="dashboard-items search-items"  >
@@ -255,6 +262,7 @@
     ';
 }
     }
+}
 ?>
  
                             </tbody>

@@ -45,6 +45,22 @@ class admin_controller extends CI_Controller {
             redirect('admin/doctors');
         }
     }
+
+    public function deleteAppointment() {
+        if(isset($_SESSION["user"])){
+            if(($_SESSION["user"])=="" or $_SESSION['usertype']!='a'){
+                redirect('auth/login');
+            }
+        }else{
+            redirect('auth/login');
+        }
+        if($this->input->get('id')){
+            $id = $this->input->get('id');
+            
+            $this->admin_model->delete_appointment($id);
+            redirect('admin/Appointment');
+        }
+    }
     public function addDoctor() 
     {
         // Check izin

@@ -62,6 +62,10 @@ public function delete_schedule($id)
 {
     $this->db->delete('schedule', array('scheduleid' => $id));
 }
+public function delete_appointment($id)
+{
+    $this->db->delete('appointment', array('appoid' => $id));
+}
 
 public function update_doctor($id, $data)
     {

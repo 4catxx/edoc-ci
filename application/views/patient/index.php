@@ -350,7 +350,7 @@
                                                 else{
                                                    foreach ($result->result_array() as $row){
                                                     $status = $row["status"];
-                                                    if ($status !== null && $status !== '') {
+                                                    if ($status == null && $status == '') {
                                                         $allStatusNull = false;
                                                         $scheduleid=$row["scheduleid"];
                                                         $title=$row["title"];
@@ -374,6 +374,7 @@
                                                         <td style="text-align:center;">
                                                             '.substr($scheduledate,0,10).' '.substr($scheduletime,0,5).'
                                                         </td>
+                                                        
 
                 
                                                        
