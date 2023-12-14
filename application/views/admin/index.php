@@ -262,7 +262,8 @@ echo $nama_hari[$index_hari];
 
                                         </thead>
                                         <tbody>
-    <?php
+                                        <?php
+        $today = date("Y-m-d");
         $nextweek = date("Y-m-d", strtotime("+1 week"));
         $sqlmain = "SELECT appointment.appoid, schedule.scheduleid, schedule.title, doctor.docname, patient.pname, schedule.scheduledate, schedule.scheduletime, appointment.apponum, appointment.appodate FROM schedule INNER JOIN appointment ON schedule.scheduleid = appointment.scheduleid INNER JOIN patient ON patient.pid = appointment.pid INNER JOIN doctor ON schedule.docid = doctor.docid WHERE schedule.scheduledate >= '$today' AND schedule.scheduledate <= '$nextweek' ORDER BY schedule.scheduledate DESC";
         $result = $this->db->query($sqlmain);
@@ -292,11 +293,14 @@ echo $nama_hari[$index_hari];
                 $appodate = $row["appodate"];
                 echo '<tr>
                     <td style="text-align:center;font-size:23px;font-weight:500; color: var(--btnnicetext);padding:20px;">' . $apponum . '</td>
-                    <td style="font-weight:600;">  ' . substr($pname, 0, 25) . '</td>';
+                    <td style="text-align:center;font-weight:600;">' . substr($pname, 0, 25) . '</td>' .
+                    '<td style="text-align:center;font-weight:600;"> ' . substr($docname, 0, 25) . '</td>'.
+                    '<td style="text-align:center;padding:20px;">  ' . substr($title, 0, 30) . '</td>';
             }
         }
     ?>
 </tbody>
+
 
                 
                                         </table>
@@ -349,8 +353,8 @@ echo $nama_hari[$index_hari];
                 $scheduletime = $row["scheduletime"];
                 $nop = $row["nop"];
                 echo '<tr>
-                    <td style="padding:20px;">  ' . substr($title, 0, 30) . '</td>
-                    <td>' . substr($docname, 0, 20) . '</td>
+                    <td style="text-align:center;padding:20px;">  ' . substr($title, 0, 30) . '</td>
+                    <td style="text-align:center;">' . substr($docname, 0, 20) . '</td>
                     <td style="text-align:center;">' . substr($scheduledate, 0, 10) . ' ' . substr($scheduletime, 0, 5) . '</td>
                 </tr>';
             }

@@ -360,29 +360,26 @@ $schedulerow = $this->db->query("select  * from  schedule where scheduledate='$t
             </div>
             </div>
             ';
-        }elseif($action=='edit'){
-            $this->load->database();
-            $sqlmain= "select * from patient where pid=?";
-            $query = $this->db->query($sqlmain, array($id));
-            $row = $query->row();
-            if (isset($row))
-            {
-                $name=$row->pname;
-                $email=$row->pemail;
-                $address=$row->paddress;
-                $nic=$row->pnic;
-                $tele=$row->ptel;
-            }
+        }elseif($action == 'edit'){
+            $sqlmain = "select * from patient where pid='$id'";
+            $result = $this->db->query($sqlmain);
+            $row = $result->row_array();
+            $name = $row["pname"];
+            $email = $row["pemail"];
+            
+            
+            
+            $nic = $row['pnic'];
+            $tele = $row['ptel'];
         
-            $error_1 = $this->input->get('error');
-            $errorlist= array(
-                '1'=>'<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Already have an account for this Email address.</label>',
-                '2'=>'<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Password Conformation Error! Reconform Password</label>',
-                '3'=>'<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;"></label>',
-                '4'=>"",
-                '0'=>'',
+            $error_1 = $this->input->get("error");
+            $errorlist = array(
+                '1' => '<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Already have an account for this Email address.</label>',
+                '2' => '<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Password Conformation Error! Reconform Password</label>',
+                '3' => '<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;"></label>',
+                '4' => "",
+                '0' => '',
             );
-        }
         
 
             if($error_1!='4'){
@@ -391,7 +388,7 @@ $schedulerow = $this->db->query("select  * from  schedule where scheduledate='$t
                             <div class="popup">
                             <center>
                             
-                                <a class="close" href="'.base_url('patient').'/settings">&times;</a> 
+                                <a class="close" href="'.base_url('dokter').'/settings">&times;</a> 
                                 <div style="display: flex;justify-content: center;">
                                 <div class="abc">
                                 <table width="80%" class="sub-table scrolldown add-doc-form-container" border="0">
@@ -402,13 +399,13 @@ $schedulerow = $this->db->query("select  * from  schedule where scheduledate='$t
                                     </tr>
                                     <tr>
                                         <td>
-                                            <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">Edit User Account Details.</p>
-                                        User ID : '.$id.' <br><br>
+                                            <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">Edit Doctor Details.</p>
+                                        Doctor ID : '.$id.' <br><br>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <form action="'.base_url('patient').'/update_user" method="POST" class="add-new-form">
+                                            <form action="'.base_url('patient').'/update" method="POST" class="add-new-form">
                                             <label for="Email" class="form-label">Email: </label>
                                             <input type="hidden" value="'.$id.'" name="id00">
                                         </td>
@@ -452,17 +449,7 @@ $schedulerow = $this->db->query("select  * from  schedule where scheduledate='$t
                                             <input type="tel" name="Tele" class="input-text" placeholder="Telephone Number" value="'.$tele.'" required><br>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td class="label-td" colspan="2">
-                                            <label for="spec" class="form-label">Address</label>
-                                            
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="label-td" colspan="2">
-                                        <input type="text" name="address" class="input-text" placeholder="Address" value="'.$address.'" required><br>
-                                        </td>
-                                    </tr>
+                                    
                                     <tr>
                                         <td class="label-td" colspan="2">
                                             <label for="password" class="form-label">Password: </label>
@@ -510,15 +497,15 @@ $schedulerow = $this->db->query("select  * from  schedule where scheduledate='$t
                         <center>
                         <br><br><br><br>
                             <h2>Edit Successfully!</h2>
-                            <a class="close" href=""'.base_url('patient').'/settings">&times;</a>
+                            <a class="close" href="'.base_url('patient').'/settings">&times;</a>
                             <div class="content">
                                 If You change your email also Please logout and login again with your new email
                                 
                             </div>
                             <div style="display: flex;justify-content: center;">
                             
-                            <a href=""'.base_url('patient').'/settings" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;OK&nbsp;&nbsp;</font></button></a>
-                            <a href="'.base_url('patient').'/logout" class="non-style-link"><button  class="btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;Log out&nbsp;&nbsp;</font></button></a>
+                            <a href="'.base_url('patient').'/settings" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;OK&nbsp;&nbsp;</font></button></a>
+                            <a href="'.base_url('auth').'/logout" class="non-style-link"><button  class="btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;Log out&nbsp;&nbsp;</font></button></a>
 
                             </div>
                             <br><br>
@@ -528,7 +515,7 @@ $schedulerow = $this->db->query("select  * from  schedule where scheduledate='$t
     ';
 
 
-
+        }
         }; }
 
     }

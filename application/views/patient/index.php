@@ -161,15 +161,15 @@
                         <h3>Selamat datang!</h3>
 <h1><?php echo $username  ?>.</h1>
 <p>Tidak tahu tentang dokter? tidak masalah, mari melompat ke bagian
-    <a href="<?= base_url('patient'); ?>/doctors.php" class="non-style-link"><b>"Semua Dokter"</b></a> atau
-    <a href="<?= base_url('patient'); ?>/schedule.php" class="non-style-link"><b>"Sesi"</b> </a><br>
+    <a href="<?= base_url('patient'); ?>/doctors" class="non-style-link"><b>"Semua Dokter"</b></a> atau
+    <a href="<?= base_url('patient'); ?>/schedulep" class="non-style-link"><b>"Sesi"</b> </a><br>
     Lacak riwayat janji temu sebelumnya dan seterusnya.<br>Juga cari tahu waktu kedatangan yang diharapkan dari dokter atau konsultan medis Anda.<br><br>
 </p>
 
                             
 <h3>Hubungi Dokter di Sini</h3>
 
-                            <form action="<?= base_url('patient');?>/schedule.php" method="post" style="display: flex">
+                            <form action="<?= base_url('patient');?>/schedule" method="post" style="display: flex">
 
                                 <input type="search" name="search" class="input-text "placeholder="Cari Dokter dan Kami Akan Menemukan Sesi yang Tersedia"
  list="doctors" style="width:45%;">&nbsp;&nbsp;
