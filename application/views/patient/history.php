@@ -254,7 +254,7 @@ while ($row = $result->unbuffered_row('array')) {
                 </button>
             </a>';
         } else {
-            echo '<button class="btn-primary-soft btn button-icon" style="padding: 5px; margin-top: 10px;" disabled id="disabledButton">
+            echo '<button class="btn-primary-soft btn button-icon" style="padding: 5px; margin-top: 10px;" onmouseover="changeImage(this)" onmouseout="restoreImage(this)" disabled id="disabledButton">
                 <img src="' . $printerImageBlue . '" alt="Print" width="30" style="padding: 1px; vertical-align: middle;" id="printerImage">
                 <font class="tn-in-text" style="margin-left: 5px;">Unduh Rekam</font>
             </button>';
